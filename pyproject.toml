@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "twelve-data-scrape"
+version = "0.1.0"
+description = "twelve-data-scrape"
+authors = ["Kittawee Kongpan <kittawee9469@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+scrapy = "==2.9.0"
+twisted = "^23.10.0"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
