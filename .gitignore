@@ -89,7 +89,7 @@ ipython_config.py
 #Pipfile.lock
 
 # poetry
-poetry.lock
+# poetry.lock
 
 # pdm
 #pdm.lock
@@ -140,3 +140,4 @@ cython_debug/
 
 # Resources
 output/
+input/
