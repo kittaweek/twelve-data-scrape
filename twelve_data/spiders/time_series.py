@@ -4,54 +4,76 @@ from urllib.parse import urlencode
 import scrapy
 
 from twelve_data.items import TimeSeriesItem
+from utils.twelve_data import get_dates
 from utils.twelve_data import get_headers
 
 
 class TimeSeriesSpider(scrapy.Spider):
     name = "time_series"
     allowed_domains = ["api.twelvedata.com"]
+    custom_settings = {
+        "FEEDS": {
+            "outputs/%(name)s/%(interval)s/%(time)s.csv": {
+                "format": "csv",
+                "overwrite": True,
+            }
+        }
+    }
 
-    # interval : 1min | 5min | 15min | 30min | 45min | 1h | 2h | 4h | 1day | 1week | 1month
-    interval_list = [
-        "1min",
-        "5min",
-        "15min",
-        "30min",
-        "45min",
-        "1h",
-        "2h",
-        "4h",
-        "1day",
-        "1week",
-        "1month",
-    ]
-    # outputsize : max is 5000
+    # Interval : 1min | 5min | 15min | 30min | 45min | 1h | 2h | 4h | 1day | 1week | 1month
+    interval = "1min"
+    # Outputsize : 1 - 5000
     outputsize = 5000
-    # format : csv or json
+    # Format : csv or json
     format = "json"
+    # Symbol ticker of the instrument
+    symbol = "XAU/USD"
+
+    def __init__(
+        self,
+        symbol: str = "XAU/USD",
+        interval: str = "1min",
+        outputsize: str = "5000",
+        *args,
+        **kwargs,
+    ):
+        super(TimeSeriesSpider, self).__init__(*args, **kwargs)
+        self.symbol = symbol
+        self.interval = interval
+        self.outputsize = int(outputsize)
 
     def start_requests(self):
         logging.info("Scraping start.")
         url = "https://api.twelvedata.com/time_series"
-        symbol_list = ["XAU/USD", "USD/THB", "THB/USD", "WTI/USD"]
-        for symbol in symbol_list:
-            for interval in self.interval_list:
-                query_string = urlencode(
-                    {
-                        "symbol": symbol,
-                        "interval": interval,
-                        "outputsize": self.outputsize,
-                        "format": self.format,
-                    }
-                )
-                yield scrapy.Request(
-                    url=f"{url}?{query_string}",
-                    method="GET",
-                    headers=get_headers(),
-                    callback=self.parse,
-                )
-            #     break # Debug
-            # break # Debug
+        params = {
+            "symbol": self.symbol,
+            "interval": self.interval,
+            "outputsize": self.outputsize,
+            "format": self.format,
+        }
+        if self.interval not in ["1month", "1week"]:
+            start_date, end_date = get_dates(
+                self.symbol, self.interval, self.outputsize
+            )
+            params = {
+                **params,
+                "start_date": start_date,
+                "end_date": end_date,
+            }
+
+        query_string = urlencode(
+            {
+                "timezone": "UTC",
+                **params,
+            }
+        )
+        yield scrapy.Request(
+            url=f"{url}?{query_string}",
+            method="GET",
+            headers=get_headers(),
+            callback=self.parse,
+        )
+
         logging.info("Scraping completed.")
 
     def parse(self, response):
