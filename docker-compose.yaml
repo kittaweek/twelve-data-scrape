@@ -5,6 +5,8 @@ services:
   scrapyd:
     build: ./
     container_name: twelve-data-scrape
+    environment:
+      - TZ=${TZ}
     ports:
       - ${PORT}:6800
     volumes:
