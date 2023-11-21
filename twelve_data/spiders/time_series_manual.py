@@ -29,8 +29,14 @@ class TimeSeriesManualSpider(scrapy.Spider):
     symbol = "XAU/USD"
 
     def __init__(
-        self, symbol: str = "XAU/USD", interval: str = "1min", outputsize: str = "5000"
+        self,
+        symbol: str = "XAU/USD",
+        interval: str = "1min",
+        outputsize: str = "5000",
+        *args,
+        **kwargs,
     ):
+        super(TimeSeriesManualSpider, self).__init__(*args, **kwargs)
         self.symbol = symbol
         self.interval = interval
         self.outputsize = int(outputsize)
