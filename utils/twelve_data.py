@@ -21,8 +21,8 @@ def get_headers() -> Dict[str, str]:
 
 
 # interval : 1min | 5min | 15min | 30min | 45min | 1h | 2h | 4h | 1day | 1week | 1month
-def get_dates(symbol:str,interval: str, outputsize: int) -> tuple[str, str]:
-    input_path = f"inputs/{symbol}"
+def get_dates(symbol: str, interval: str, outputsize: int) -> tuple[str, str]:
+    input_path = f"./inputs/{symbol}"
     if not os.path.exists(input_path):
         os.makedirs(input_path)
     file_logs = f"{input_path}/{interval}.log"

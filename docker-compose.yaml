@@ -10,7 +10,7 @@ services:
     ports:
       - ${PORT}:6800
     volumes:
-      - ${INPUT_PATH}:/input
-      - ${OUTPUT_PATH}:/outputs
-      - ${LOG_PATH}:/logs
+      - ${INPUT_PATH}:/app/inputs
+      - ${OUTPUT_PATH}:/app/outputs
+      - ${LOG_PATH}:/app/logs
     restart: unless-stopped

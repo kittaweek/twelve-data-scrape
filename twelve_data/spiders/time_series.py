@@ -13,7 +13,7 @@ class TimeSeriesSpider(scrapy.Spider):
     allowed_domains = ["api.twelvedata.com"]
     custom_settings = {
         "FEEDS": {
-            "outputs/%(name)s/%(interval)s/%(time)s.csv": {
+            "./outputs/%(name)s/%(interval)s/%(time)s.csv": {
                 "format": "csv",
                 "overwrite": True,
             }
