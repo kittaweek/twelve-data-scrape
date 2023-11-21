@@ -10,23 +10,33 @@ from utils.twelve_data import get_headers
 class ForexPairSpider(scrapy.Spider):
     name = "forex_pair"
     allowed_domains = ["api.twelvedata.com"]
+    currency_base = "USD"
+
+    def __init__(
+        self,
+        currency_base: str = "USD",
+        *args,
+        **kwargs,
+    ):
+        super(ForexPairSpider, self).__init__(*args, **kwargs)
+        self.currency_base = currency_base
 
     def start_requests(self):
         logging.info("Scraping start.")
         url = "https://api.twelvedata.com/forex_pairs"
-        currency_base_list = ["XAU", "WTI", "THB", "USD"]
-        for currency_base in currency_base_list:
-            query_string = urlencode({"currency_base": currency_base, "format": "json"})
-            logging.info(f"Getting : {currency_base}")
-            yield scrapy.Request(
-                url=f"{url}?{query_string}",
-                method="GET",
-                headers=get_headers(),
-                callback=self.parse,
-            )
-            logging.info(f"Get {currency_base} completed.")
+        query_string = urlencode(
+            {"currency_base": self.currency_base, "format": "json"}
+        )
+        logging.info(f"Getting : {self.currency_base}")
+        yield scrapy.Request(
+            url=f"{url}?{query_string}",
+            method="GET",
+            headers=get_headers(),
+            callback=self.parse,
+        )
+        logging.info(f"Get {self.currency_base} completed.")
 
-            # break # Debug
+        # break # Debug
         logging.info("Scraping completed.")
 
     def parse(self, response):
