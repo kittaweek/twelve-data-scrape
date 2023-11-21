@@ -1,0 +1,14 @@
+---
+version: "3.8"
+
+services:
+  scrapyd:
+    build: ./
+    container_name: twelve-data-scrape
+    ports:
+      - ${PORT}:6800
+    volumes:
+      - ${INPUT_PATH}:/input
+      - ${OUTPUT_PATH}:/outputs
+      - ${LOG_PATH}:/logs
+    restart: unless-stopped

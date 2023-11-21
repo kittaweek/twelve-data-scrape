@@ -1,2 +1,0 @@
-# stock-scrape
-Stock Scraping

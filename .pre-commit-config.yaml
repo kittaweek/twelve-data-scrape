@@ -41,7 +41,6 @@ repos:
     hooks:
       - id: reorder-python-imports
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-      # Ruff version.
     rev: "v0.0.245"
     hooks:
       - id: ruff
@@ -75,8 +74,8 @@ repos:
       - id: hadolint
         args:
           - --ignore
-          - DL3025
+          - DL3008
           - --ignore
-          - DL3018
+          - DL3009
           - --ignore
-          - DL3027
+          - DL3015
