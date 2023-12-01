@@ -2,9 +2,6 @@ FROM python:3.11.4-slim-bullseye
 LABEL maintainer="Kittawee Kongpan"
 LABEL description="Twelve data Scrapy spiders."
 
-FROM python:3.11.4-slim-bullseye
-LABEL maintainer="Kittawee Kongpan"
-LABEL description="Twelve data Scrapy spiders."
 WORKDIR /app
 
 RUN set -xe \
