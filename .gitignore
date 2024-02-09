@@ -48,5 +48,6 @@ logs
 *.pid
 
 # Resources:
+*.json
 outputs
 inputs
