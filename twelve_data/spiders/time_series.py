@@ -21,26 +21,32 @@ class TimeSeriesSpider(scrapy.Spider):
             }
         }
     }
-    # check is auto scrape
-    is_auto = False
     # Symbol ticker of the instrument
     symbol = "XAU/USD"
-    # Interval : 1min | 5min | 15min | 30min | 45min | 1h | 2h | 4h | 1day | 1week | 1month
-    interval = "1min"
-    # Outputsize : 1 - 5000
-    outputsize = 5000
+
     # Format : csv or json
     start_date = None  # Format : YYYY-MM-DD
     end_date = None  # Format : YYYY-MM-DD
+
+    # Interval : 1min | 5min | 15min | 30min | 45min | 1h | 2h | 4h | 1day | 1week | 1month
+    interval = "1min"
+
+    # Outputsize : 1 - 5000
+    outputsize = 5000
+
+    # Format : csv or json
     format = "json"
+
+    # check is auto scrape
+    is_auto = False
 
     def __init__(
         self,
         symbol: str = "XAU/USD",
-        interval: str = "1min",
-        outputsize: str = "5000",
         start_date: str | None = None,
         end_date: str | None = None,
+        interval: str = "1min",
+        outputsize: str = "5000",
         *args,
         **kwargs,
     ):
@@ -96,6 +102,7 @@ class TimeSeriesSpider(scrapy.Spider):
 
     def parse(self, response):
         data = response.json()
+        print(data["status"])
         if data["status"] == "ok":
             for i in data["values"]:
                 listing = TimeSeriesItem()
