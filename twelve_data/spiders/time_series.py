@@ -102,7 +102,6 @@ class TimeSeriesSpider(scrapy.Spider):
 
     def parse(self, response):
         data = response.json()
-        print(data["status"])
         if data["status"] == "ok":
             for i in data["values"]:
                 listing = TimeSeriesItem()
