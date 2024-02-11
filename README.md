@@ -52,6 +52,10 @@ scrapy crawl ${SPIDER_NAME} -a {PAEAMETERS}={VALUE}
 With Docker & scrapyd
 ### Setup
 
+1. Fix .env
+2. Create GCS credentials.json to project path
+3. Run Docker compose command
+
 ```shell
 docker compose up -d
 ```
@@ -59,7 +63,7 @@ docker compose up -d
 ### How to used
 
 ```shell
-curl http://localhost:{PORT}/schedule.json -d project=default -d spider={SPIDER_NAME} -d {PAEAMETERS}={VALUE}
+curl http://localhost:6800/schedule.json -d project=default -d spider=time_series -d {PAEAMETERS}={VALUE}
 ```
 
 Web client : http://localhost:{PORT}

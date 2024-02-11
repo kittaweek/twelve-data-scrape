@@ -98,7 +98,7 @@ LOG_ENABLED = False
 FILES_STORE = "gs://forex-ai/"
 GCS_PROJECT_ID = "forex-ai-413616"
 # scrapy-s3pipeline
-GOOGLE_APPLICATION_CREDENTIALS_JSON = open("forex-ai-test.json", "r").read()
+GOOGLE_APPLICATION_CREDENTIALS_JSON = open("credentials.json", "r").read()
 S3PIPELINE_URL = "gs://forex-ai/{name}/{time}/items.{chunk:07d}.jl"
 S3PIPELINE_MAX_CHUNK_SIZE = 5000
 S3PIPELINE_GZIP = False
