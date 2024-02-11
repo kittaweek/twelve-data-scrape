@@ -59,3 +59,21 @@ def _time_delta(interval: str, outputsize: int) -> str:
     else:
         result = timedelta(weeks=delta_time * 4)
     return result
+
+
+def is_block_oldest_date(symbol: str) -> bool:
+    is_block = False
+    block_oldest_date_path = "./inputs/block_oldest_date.log"
+    if os.path.exists(block_oldest_date_path):
+        f = open(block_oldest_date_path, "r")
+        for line in f:
+            if symbol == line.strip():
+                is_block = True
+                break
+    return is_block
+
+
+def create_block_oldest_date(symbol: str):
+    block_oldest_date_path = "./inputs/block_oldest_date.log"
+    with open(block_oldest_date_path, "a") as f:
+        f.write(f"{symbol}\n")
