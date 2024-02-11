@@ -1,12 +1,12 @@
 from twelve_data.spiders.time_series import TimeSeriesSpider
 
 
-class TimeSeriesXauUsdSpider(TimeSeriesSpider):
-    name = "time_series_xau_usd"
+class TimeSeriesEthUsdSpider(TimeSeriesSpider):
+    name = "time_series_eth_usd"
     allowed_domains = ["api.twelvedata.com"]
 
     # Symbol ticker of the instrument
-    symbol = "XAU/USD"
+    symbol = "ETH/USD"
 
     # Format : csv or json
     start_date = None  # Format : YYYY-MM-DD
