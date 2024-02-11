@@ -12,6 +12,7 @@ twisted = "==22.10.0"
 python-dotenv = "^1.0.0"
 scrapyd = "^1.4.3"
 scrapyd-client = "^1.2.3"
+scrapy-s3pipeline = {extras = ["gcs"], version = "^0.7.0"}
 
 [build-system]
 requires = ["poetry-core"]
