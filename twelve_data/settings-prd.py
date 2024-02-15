@@ -6,6 +6,12 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 BOT_NAME = "twelve_data"
 
@@ -97,8 +103,10 @@ LOG_ENABLED = False
 # Google Cloud Storage
 FILES_STORE = "gs://forex-ai/"
 GCS_PROJECT_ID = "forex-ai-413616"
+
 # scrapy-s3pipeline
-GOOGLE_APPLICATION_CREDENTIALS_JSON = open("credentials.json", "r").read()
-S3PIPELINE_URL = "gs://forex-ai/raw/{name}/items.{time}.jl"
+credentials_file = os.getenv("GCP_CREDENTIALS_JSON")
+GOOGLE_APPLICATION_CREDENTIALS_JSON = open(credentials_file, "r").read()
+S3PIPELINE_URL = "gs://forex-ai/raws/{name}/items.{time}.jl"
 S3PIPELINE_MAX_CHUNK_SIZE = 5000
 S3PIPELINE_GZIP = False

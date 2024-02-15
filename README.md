@@ -28,6 +28,23 @@ Description : Get metadata and time series of symbol.
 | format     | string | "json"    | Data response format : "json" or "csv"                                                                   |
 | symbol     | string | "XAU/USD" | Symbol ticker of the instrument                                                                          |
 
+#### 2.1 Time Series By symbols
+
+
+| Symbol  | Type   | Scrapy Name         |
+| ------- | ------ | ------------------- |
+| Gold    | Metal  | time_series_xau_usd |
+| Silver  | Metal  | time_series_xag_usd |
+| EUR/USD | Major  | time_series_eur_usd |
+| GBP/USD | Major  | time_series_gbp_usd |
+| USD/JPY | Major  | time_series_usd_jpy |
+| AUD/JPY | Minor  | time_series_aud_jpy |
+| AUD/CAD | Minor  | time_series_aud_cad |
+| GBP/CAD | Minor  | time_series_gbp_cad |
+| GBP/AUD | Minor  | time_series_gbp_aud |
+| BTC/USD | Crypto | time_series_btc_usd |
+| ETH/USD | Crypto | time_series_eth_usd |
+
 ----------------------------------------------
 
 
