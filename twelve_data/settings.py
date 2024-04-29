@@ -6,6 +6,12 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 BOT_NAME = "twelve_data"
 
@@ -62,9 +68,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    "twelve_data.pipelines.TwelveDataPipeline": 300,
-# }
+ITEM_PIPELINES = {
+    "s3pipeline.S3Pipeline": 100,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -91,6 +97,16 @@ ROBOTSTXT_OBEY = True
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
-FEEDS = {"./outputs/%(name)s/%(time)s.csv": {"format": "csv", "overwrite": True}}
 LOG_LEVEL = "INFO"
 LOG_ENABLED = False
+
+# Google Cloud Storage
+FILES_STORE = "gs://forex-ai/"
+GCS_PROJECT_ID = "forex-ai-413616"
+
+# scrapy-s3pipeline
+credentials_file = os.getenv("GCP_CREDENTIALS_JSON")
+GOOGLE_APPLICATION_CREDENTIALS_JSON = open(credentials_file, "r").read()
+S3PIPELINE_URL = "gs://forex-ai/raws/{name}/items.{time}.jl"
+S3PIPELINE_MAX_CHUNK_SIZE = 5000
+S3PIPELINE_GZIP = False
