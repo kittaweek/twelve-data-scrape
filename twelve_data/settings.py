@@ -23,7 +23,7 @@ NEWSPIDER_MODULE = "twelve_data.spiders"
 # USER_AGENT = "twelve_data (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
@@ -109,4 +109,4 @@ credentials_file = os.getenv("GCP_CREDENTIALS_JSON")
 GOOGLE_APPLICATION_CREDENTIALS_JSON = open(credentials_file, "r").read()
 S3PIPELINE_URL = "gs://forex-ai/raws/{name}/items.{time}.jl"
 S3PIPELINE_MAX_CHUNK_SIZE = 5000
-S3PIPELINE_GZIP = False
+S3PIPELINE_GZIP = True
