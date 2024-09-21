@@ -22,7 +22,7 @@ class TimeSeriesSpider(scrapy.Spider):
         }
     }
     # Symbol ticker of the instrument
-    symbol = "XAU/USD"
+    symbol = "EUR/USD"
 
     # Format : csv or json
     start_date = None  # Format : YYYY-MM-DD
@@ -42,7 +42,7 @@ class TimeSeriesSpider(scrapy.Spider):
 
     def __init__(
         self,
-        symbol: str = "XAU/USD",
+        symbol: str = "EUR/USD",
         start_date: str | None = None,
         end_date: str | None = None,
         interval: str = "1min",
@@ -80,6 +80,7 @@ class TimeSeriesSpider(scrapy.Spider):
                 "start_date": self.start_date,
                 "end_date": self.end_date,
             }
+
         # Check Auto is Lastest
         if not self.is_auto or (
             self.is_auto and not is_block_oldest_date(symbol=self.symbol)
@@ -91,6 +92,7 @@ class TimeSeriesSpider(scrapy.Spider):
                     **params,
                 }
             )
+
             yield scrapy.Request(
                 url=f"{url}?{query_string}",
                 method="GET",
@@ -98,19 +100,24 @@ class TimeSeriesSpider(scrapy.Spider):
                 callback=self.parse,
             )
 
-        logging.info("Scraping completed.")
-
     def parse(self, response):
-        data = response.json()
-        if data["status"] == "ok":
-            for i in data["values"]:
-                listing = TimeSeriesItem()
-                listing["symbol"] = data["meta"]["symbol"]
-                listing["datetime"] = i["datetime"]
-                listing["open"] = i["open"]
-                listing["high"] = i["high"]
-                listing["low"] = i["low"]
-                listing["close"] = i["close"]
-                yield listing
-        elif data["status"] == "error" and self.is_auto:
-            create_block_oldest_date(symbol=self.symbol)
+
+        try:
+            data = response.json()
+            if data["status"] == "ok":
+                for i in data["values"]:
+                    listing = TimeSeriesItem()
+                    listing["symbol"] = data["meta"]["symbol"]
+                    listing["datetime"] = i["datetime"]
+                    listing["open"] = i["open"]
+                    listing["high"] = i["high"]
+                    listing["low"] = i["low"]
+                    listing["close"] = i["close"]
+                    yield listing
+
+            elif data["status"] == "error" and self.is_auto:
+                create_block_oldest_date(symbol=self.symbol)
+
+            logging.info("Scraping completed.")
+        except Exception as e:
+            logging.error(f"Error occurred: {str(e)}")
